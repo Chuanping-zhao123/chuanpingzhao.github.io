@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chuanping Zhao — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #ffffff;
+      --bg2:    #f5f5f2;
+      --card:   #ffffff;
+      --border: #e4e4df;
+      --blue:   #2563eb;
+      --text:   #1a1a1a;
+      --muted:  #737373;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ───────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-weight: 700; font-size: 1.1rem;
+      color: var(--text); letter-spacing: -.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: .875rem; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ──────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center;
+      background: var(--bg2);
+      padding: 120px 5% 80px;
+    }
+    .hero-content { max-width: 720px; }
+    .hero-badge {
+      display: inline-block; margin-bottom: 1.75rem;
+      padding: .35rem 1rem; border-radius: 4px;
+      border: 1px solid var(--border); color: var(--muted);
+      font-size: .75rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+      background: var(--bg);
+    }
+    .hero-name {
+      font-size: clamp(2.4rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.05;
+      color: var(--text); letter-spacing: -.03em;
+      margin-bottom: 1.25rem;
+    }
+    .hero-subtitle {
+      font-size: clamp(.9rem, 2vw, 1.15rem); font-weight: 400; color: var(--muted);
+      max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.75;
+    }
+    .hero-ctas { display: flex; gap: .875rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: .7rem 1.75rem; border-radius: 6px; font-weight: 600; font-size: .875rem;
+      cursor: pointer; text-decoration: none; transition: all .2s; border: none;
+    }
+    .btn-primary { background: var(--text); color: #fff; }
+    .btn-primary:hover { opacity: .8; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: #a3a3a3; transform: translateY(-1px); }
+    .scroll-hint {
+      margin-top: 3.5rem;
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      color: var(--muted); font-size: .75rem;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+    /* ── SECTIONS ──────────────────────────────── */
+    section { padding: 90px 5%; }
+    .section-label {
+      font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .75rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 700; margin-bottom: .75rem;
+      letter-spacing: -.02em; color: var(--text);
+    }
+    .section-desc { color: var(--muted); max-width: 600px; line-height: 1.75; margin-bottom: 3rem; }
+
+    /* ── SKILLS ────────────────────────────────── */
+    #skills { background: var(--bg); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.25rem 1.5rem; transition: border-color .2s;
+    }
+    .skill-card:hover { border-color: #a3a3a3; }
+    .skill-header { display: flex; justify-content: space-between; margin-bottom: .75rem; }
+    .skill-name { font-weight: 500; font-size: .9rem; color: var(--text); }
+    .skill-pct { color: var(--muted); font-weight: 600; font-size: .82rem; }
+    .skill-bar { height: 4px; background: #eeeeea; border-radius: 999px; overflow: hidden; }
+    .skill-fill {
+      height: 100%; border-radius: 999px;
+      background: var(--text);
+      width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag {
+      padding: .3rem .85rem; border-radius: 4px; font-size: .75rem; font-weight: 500;
+      border: 1px solid var(--border); color: var(--muted); background: var(--bg2);
+      transition: all .2s;
+    }
+    .tag:hover { border-color: #a3a3a3; color: var(--text); }
+
+    /* ── TIMELINE (CV) ─────────────────────────── */
+    #cv { background: var(--bg2); }
+    .cv-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .timeline-title {
+      font-size: 1rem; font-weight: 700; margin-bottom: 2rem;
+      display: flex; align-items: center; gap: .6rem;
+      color: var(--text); letter-spacing: -.01em;
+    }
+    .timeline-title i { color: var(--muted); font-size: .9rem; }
+    .timeline { position: relative; padding-left: 1.75rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .tl-item { position: relative; margin-bottom: 2.25rem; }
+    .tl-dot {
+      position: absolute; left: -2.12rem; top: .35rem;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--text); border: 2px solid var(--bg2);
+    }
+    .tl-period { font-size: .7rem; color: var(--muted); font-weight: 600; margin-bottom: .3rem; letter-spacing: .05em; text-transform: uppercase; }
+    .tl-role { font-weight: 600; font-size: .95rem; margin-bottom: .2rem; color: var(--text); }
+    .tl-company { color: var(--muted); font-size: .85rem; margin-bottom: .5rem; }
+    .tl-desc { color: var(--muted); font-size: .85rem; line-height: 1.65; }
+
+    /* ── 3D SHOWCASE ───────────────────────────── */
+    #showcase { background: var(--bg); }
+    .obj-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; transition: all .2s; cursor: grab;
+    }
+    .obj-card:hover { border-color: #a3a3a3; box-shadow: 0 4px 24px rgba(0,0,0,.06); }
+    .obj-info { padding: 1.25rem 1.5rem; }
+    .obj-title { font-weight: 600; margin-bottom: .35rem; color: var(--text); }
+    .obj-desc { font-size: .85rem; color: var(--muted); line-height: 1.55; }
+    .obj-tag {
+      display: inline-block; margin-top: .75rem;
+      padding: .2rem .7rem; border-radius: 4px; font-size: .72rem; font-weight: 500;
+      background: var(--bg2); color: var(--muted); border: 1px solid var(--border);
+    }
+
+    /* ── CONTACT ───────────────────────────────── */
+    #contact { background: var(--bg2); }
+    .contact-grid { max-width: 520px; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .contact-icon {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; color: var(--muted);
+      flex-shrink: 0;
+    }
+    .contact-label { font-size: .7rem; color: var(--muted); margin-bottom: .2rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .contact-value { font-weight: 500; font-size: .92rem; color: var(--text); }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      text-align: center; padding: 2rem 5%;
+      border-top: 1px solid var(--border); color: var(--muted); font-size: .82rem;
+    }
+    footer strong { color: var(--text); font-weight: 600; }
+
+    /* ── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 900px) {
+      .cv-cols { grid-template-columns: 1fr; }
+      nav .nav-links { display: none; }
+    }
+    @media (max-width: 700px) {
+      .featured-model-grid { grid-template-columns: 1fr !important; }
+      .featured-model-wrap { height: 260px !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">CZ.</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#cv">Experience</a></li>
+    <li><a href="#showcase">3D Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="btn btn-primary" style="padding:.5rem 1.25rem;font-size:.82rem;">Contact Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Neuroscience PhD Candidate · Open to Collaboration</div>
+    <h1 class="hero-name">Chuanping Zhao</h1>
+    <p class="hero-subtitle">Neuroscientist · Genome Engineer · 3D Designer developing next-generation CRISPR tools and custom scientific instruments at The Scripps Research Institute.</p>
+    <div class="hero-ctas">
+      <a href="#showcase" class="btn btn-primary">View 3D Designs</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><i class="fa fa-chevron-down"></i><span>scroll</span></div>
+</section>
+
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Skills & Tools</div>
+  <div class="section-title">What I work with.</div>
+  <p class="section-desc">A broad toolkit spanning molecular biology, in vivo techniques, computational analysis, and 3D design — built across research labs in the US, China, and the UK.</p>
+
+  <div class="skills-grid" id="skill-bars">
+    <div class="skill-card"><div class="skill-header"><span class="skill-name">CRISPR / Genome Editing</span><span class="skill-pct">95%</span></div><div class="skill-bar"><div class="skill-fill" data-w="95"></div></div></div>
+    <div class="skill-card"><div class="skill-header"><span class="skill-name">Molecular Cloning & NGS</span><span class="skill-pct">92%</span></div><div class="skill-bar"><div class="skill-fill" data-w="92"></div></div></div>
+    <div class="skill-card"><div class="skill-header"><span class="skill-name">In Vivo Mouse Techniques</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div></div>
+    <div class="skill-card"><div class="skill-header"><span class="skill-name">Confocal Microscopy & Imaging</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div></div>
+    <div class="skill-card"><div class="skill-header"><span class="skill-name">Python & R / Bioinformatics</span><span class="skill-pct">82%</span></div><div class="skill-bar"><div class="skill-fill" data-w="82"></div></div></div>
+    <div class="skill-card"><div class="skill-header"><span class="skill-name">Autodesk Fusion 360 / 3D Print</span><span class="skill-pct">80%</span></div><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div></div>
+  </div>
+
+  <div style="margin-top:2.5rem">
+    <div class="section-label" style="margin-bottom:.875rem">Additional Expertise</div>
+    <div class="tags">
+      <span class="tag">HDR Template Design</span>
+      <span class="tag">RNA-seq Analysis</span>
+      <span class="tag">De novo protein design</span>
+      <span class="tag">Electroretinography (ERG)</span>
+      <span class="tag">Immunohistochemistry</span>
+      <span class="tag">In Situ Hybridization</span>
+      <span class="tag">Western Blotting</span>
+      <span class="tag">Co-Immunoprecipitation</span>
+      <span class="tag">Protein Mass Spectrometry</span>
+      <span class="tag">Cell Culture & Transfection</span>
+      <span class="tag">3D Printing (FDM)</span>
+      <span class="tag">R / ggplot2</span>
+    </div>
+  </div>
+</section>
+
+<!-- CV -->
+<section id="cv">
+  <div class="section-label">Curriculum Vitae</div>
+  <div class="section-title">Research & Education.</div>
+  <div class="cv-cols">
+    <!-- Research Experience -->
+    <div>
+      <div class="timeline-title"><i class="fa fa-flask"></i> Research Experience</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">10/2021 — Present</div>
+          <div class="tl-role">Graduate Researcher — GPCR Signaling</div>
+          <div class="tl-company">Dept. of Neuroscience, The Scripps Research Institute, FL · Supervisor: Prof. Kirill Martemyanov</div>
+          <div class="tl-desc">Identified 10 GPCRs significantly expressed in photoreceptors by RNA-seq. Developed an in vivo CRISPR-tagging approach in the neonatal retina to investigate GPCR localization. Probed their roles using physiological, pharmacological, and biochemical methods.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">10/2021 — 04/2025</div>
+          <div class="tl-role">Graduate Researcher — SMART Editing</div>
+          <div class="tl-company">Dept. of Neuroscience, The Scripps Research Institute, FL · Supervisor: Prof. Kirill Martemyanov</div>
+          <div class="tl-desc">Developed the SMART (Silently Mutate And Repair Template) method for HDR to overcome PAM constraints, extending the editing range by over 200 bp. Validated in vitro and in vivo; enabled editing of previously intractable genes in the mouse retina.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">04/2019 — 04/2020</div>
+          <div class="tl-role">Undergraduate Researcher</div>
+          <div class="tl-company">State Key Laboratory of Agricultural Microbiology, HZAU, Wuhan, China · Supervisor: Prof. Ming Sun</div>
+          <div class="tl-desc">Isolation and verification of novel nematocidal protein genes from Bacillus thuringiensis.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">07/2019 — 10/2019</div>
+          <div class="tl-role">Summer Research Intern</div>
+          <div class="tl-company">Biosciences Dept., Durham University, UK · Supervisor: Prof. Miguel de-Lucas</div>
+          <div class="tl-desc">Uncovering molecular mechanisms regulating vasculature development during de-etiolation in Arabidopsis.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">04/2018 — 03/2019</div>
+          <div class="tl-role">Undergraduate Researcher</div>
+          <div class="tl-company">Bio-Medical Center, HZAU, Wuhan, China · Supervisor: Prof. Shan Li</div>
+          <div class="tl-desc">Functional characterization of the SseK3 protein in Salmonella typhimurium.</div>
+        </div>
+      </div>
+    </div>
+    <!-- Education & Publications -->
+    <div>
+      <div class="timeline-title"><i class="fa fa-graduation-cap"></i> Education</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">04/2021 — Present</div>
+          <div class="tl-role">PhD Candidate — Chemical & Biological Sciences</div>
+          <div class="tl-company">Skaggs Graduate School, The Scripps Research Institute, Jupiter, FL, USA</div>
+          <div class="tl-desc">Research focus: next-generation genome editing tools, CRISPR-based HDR, and GPCR signaling in photoreceptors.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">09/2016 — 06/2020</div>
+          <div class="tl-role">B.S. — National Talent Training Program in Biological Sciences</div>
+          <div class="tl-company">College of Life Sciences & Technology, Huazhong Agricultural University (HZAU), Wuhan, China</div>
+          <div class="tl-desc">GPA: 3.73 / 4.0</div>
+        </div>
+      </div>
+
+      <div class="timeline-title" style="margin-top:2.5rem"><i class="fa fa-file-alt"></i> Selected Publications & Patents</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">2025</div>
+          <div class="tl-role">Nat Commun 16, 3768 (2025) <a href="https://doi.org/10.1038/s41467-025-58945-6" target="_blank" style="color:var(--blue);font-size:.8rem;font-weight:500;margin-left:.5rem">[Link]</a></div>
+          <div class="tl-company">Zhao C., Cao Y., Ibrahim N. et al.</div>
+          <div class="tl-desc">Efficient in vivo labeling of endogenous proteins with SMART delineates retina cellular and synaptic organization.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-period">Patent — 2024</div>
+          <div class="tl-role">US & PCT Patent Application <a href="https://patentscope2.wipo.int/search/en/WO2026039431" target="_blank" style="color:var(--blue);font-size:.8rem;font-weight:500;margin-left:.5rem">[Link]</a></div>
+          <div class="tl-company">Martemyanov K., Zhao C. — Filed August 2024</div>
+          <div class="tl-desc">Compositions and Methods for Homology-Directed Repair-Based DNA Modifications. US App. No.: 63/682269; PCT/US2025/041648.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3D SHOWCASE -->
+<section id="showcase">
+  <div class="section-label">3D Design Work</div>
+  <div class="section-title">Designed objects.</div>
+  <p class="section-desc">Interactive 3D models — drag to rotate. Designed using Autodesk Fusion 360 and fabricated via SLA 3D printing and CNC Machining, primarily for custom scientific instrumentation in the lab.</p>
+
+  <div class="obj-card" style="margin-bottom:1.25rem">
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:0" class="featured-model-grid">
+      <div id="wrap-real" class="featured-model-wrap" style="height:380px;cursor:grab;position:relative;background:var(--bg2);">
+        <div id="stl-loading-top" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;color:var(--muted);font-size:.9rem;pointer-events:none">
+          <i class="fa fa-spinner fa-spin" style="font-size:1.5rem;color:var(--muted)"></i>
+          Loading model…
+        </div>
+      </div>
+      <div class="obj-info" style="display:flex;flex-direction:column;justify-content:center;padding:2rem">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem">Featured Design</div>
+        <div class="obj-title" style="font-size:1.2rem;margin-bottom:.75rem">CNC Top Chamber</div>
+        <div class="obj-desc" style="font-size:.875rem;line-height:1.7">
+          Custom-designed top chamber component for the electroretinography (ERG) recording system. Engineered for precise electrode access and light-tight sealing during ex vivo retinal physiology experiments. Fabricated via CNC machining for high-dimensional accuracy.
+        </div>
+        <div style="margin-top:1.25rem;display:flex;gap:.5rem;flex-wrap:wrap">
+          <span class="obj-tag">Autodesk Fusion 360</span>
+          <span class="obj-tag">CNC Machined</span>
+          <span class="obj-tag">Lab Instrument</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj-card" style="margin-bottom:1.25rem">
+    <div style="display:grid;grid-template-columns:340px 1fr;gap:0" class="featured-model-grid">
+      <div class="obj-info" style="display:flex;flex-direction:column;justify-content:center;padding:2rem">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem">Featured Design</div>
+        <div class="obj-title" style="font-size:1.2rem;margin-bottom:.75rem">CNC Bottom Chamber</div>
+        <div class="obj-desc" style="font-size:.875rem;line-height:1.7">
+          Complementary bottom chamber component of the ERG recording assembly. Designed to mate precisely with the top chamber, housing the perfusion inlet/outlet ports and electrode base for stable retinal mounting during electrophysiological recordings.
+        </div>
+        <div style="margin-top:1.25rem;display:flex;gap:.5rem;flex-wrap:wrap">
+          <span class="obj-tag">Autodesk Fusion 360</span>
+          <span class="obj-tag">CNC Machined</span>
+          <span class="obj-tag">Lab Instrument</span>
+        </div>
+      </div>
+      <div id="wrap-real-bottom" class="featured-model-wrap" style="height:380px;cursor:grab;position:relative;background:var(--bg2);">
+        <div id="stl-loading-bottom" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.75rem;color:var(--muted);font-size:.9rem;pointer-events:none">
+          <i class="fa fa-spinner fa-spin" style="font-size:1.5rem;color:var(--muted)"></i>
+          Loading model…
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <div class="section-title">Let's connect.</div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fa fa-envelope"></i></div>
+        <div><div class="contact-label">Email</div><div class="contact-value">czhao@scripps.edu</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fa fa-phone"></i></div>
+        <div><div class="contact-label">Phone</div><div class="contact-value">561-524-5750</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fa fa-map-marker-alt"></i></div>
+        <div><div class="contact-label">Address</div><div class="contact-value">130 Scripps Way, Jupiter, FL 33458, USA</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <strong>Chuanping Zhao</strong>. The Scripps Research Institute, Jupiter, FL.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+<script>
+// ═══════════════════════════════════════
+//  SKILL BARS — intersection observer
+// ═══════════════════════════════════════
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.w + '%';
+      });
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+io.observe(document.getElementById('skill-bars'));
+
+// ═══════════════════════════════════════
+//  REAL STL MODEL LOADER
+// ═══════════════════════════════════════
+function loadSTL(wrapId, loadingId, filename) {
+  const wrap = document.getElementById(wrapId);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+  wrap.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, wrap.clientWidth / wrap.clientHeight, 0.01, 1000);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+  const d1 = new THREE.DirectionalLight(0xffffff, 1.0); d1.position.set(5, 10, 8); scene.add(d1);
+  const d2 = new THREE.DirectionalLight(0xdddddd, 0.5); d2.position.set(-6, -3, -5); scene.add(d2);
+  const pt = new THREE.PointLight(0xffffff, 0.4, 500); pt.position.set(0, 10, 10); scene.add(pt);
+
+  const loader = new THREE.STLLoader();
+  loader.load(
+    filename,
+    function(geometry) {
+      document.getElementById(loadingId).style.display = 'none';
+      geometry.computeVertexNormals();
+      geometry.center();
+
+      const mat = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.45, roughness: 0.5 });
+      const mesh = new THREE.Mesh(geometry, mat);
+
+      geometry.computeBoundingBox();
+      const size = new THREE.Vector3();
+      geometry.boundingBox.getSize(size);
+      const maxDim = Math.max(size.x, size.y, size.z);
+      camera.position.set(0, maxDim * 0.4, maxDim * 1.8);
+      camera.lookAt(0, 0, 0);
+      scene.add(mesh);
+
+      let isDragging = false, prevX = 0, prevY = 0, rotX = 0, rotY = 0, velX = 0, velY = 0;
+      const el = renderer.domElement;
+      el.addEventListener('mousedown', e => { isDragging = true; prevX = e.clientX; prevY = e.clientY; velX = velY = 0; e.preventDefault(); });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        velX = e.clientX - prevX; velY = e.clientY - prevY;
+        rotY += velX * 0.008; rotX += velY * 0.008;
+        prevX = e.clientX; prevY = e.clientY;
+      });
+      el.addEventListener('touchstart', e => { isDragging = true; prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; }, {passive:true});
+      window.addEventListener('touchend', () => { isDragging = false; }, {passive:true});
+      window.addEventListener('touchmove', e => {
+        if (!isDragging) return;
+        velX = e.touches[0].clientX - prevX; velY = e.touches[0].clientY - prevY;
+        rotY += velX * 0.008; rotX += velY * 0.008;
+        prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+      }, {passive:true});
+      el.addEventListener('wheel', e => { camera.position.multiplyScalar(1 + e.deltaY * 0.001); e.preventDefault(); }, {passive:false});
+
+      let t = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        t += 0.005;
+        if (!isDragging) { velX *= 0.92; velY *= 0.92; rotY += velX * 0.005; rotX += velY * 0.005; }
+        mesh.rotation.y = rotY + t * 0.3;
+        mesh.rotation.x = rotX;
+        renderer.render(scene, camera);
+      }
+      animate();
+    },
+    function(xhr) {
+      const pct = xhr.total ? Math.round(xhr.loaded / xhr.total * 100) : '...';
+      const el = document.getElementById(loadingId);
+      if (el) el.innerHTML = `<i class="fa fa-spinner fa-spin" style="font-size:1.5rem;color:var(--muted)"></i>Loading… ${pct}%`;
+    },
+    function() {
+      const el = document.getElementById(loadingId);
+      if (el) el.innerHTML = '<i class="fa fa-exclamation-triangle" style="color:#e53e3e"></i> Could not load model. Open via a local server.';
+    }
+  );
+
+  new ResizeObserver(() => {
+    renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+    camera.aspect = wrap.clientWidth / wrap.clientHeight;
+    camera.updateProjectionMatrix();
+  }).observe(wrap);
+}
+
+loadSTL('wrap-real',        'stl-loading-top',    'CNC_top chamber.stl');
+loadSTL('wrap-real-bottom', 'stl-loading-bottom', 'CNC_bottom chamber.stl');
+
+</script>
+</body>
+</html>
